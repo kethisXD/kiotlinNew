@@ -40,6 +40,7 @@ jobs:
       with:
         host: 95.165.175.66
         username: xxx
+        port: 6969
         password: ${{ secrets.SERVER_PASSWORD }}
         script: |
           mkdir -p ~/projects/kiotlinNew
