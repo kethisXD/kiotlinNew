@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.service.UserServiceTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-04-13T09:10:23" hostname="5c4a6b10d809" time="0.154">
+  <properties/>
+  <testcase name="authenticate should return user on success()" classname="com.example.service.UserServiceTest" time="0.154"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

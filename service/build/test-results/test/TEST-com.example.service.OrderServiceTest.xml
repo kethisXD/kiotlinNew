@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.service.OrderServiceTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-04-13T09:10:22" hostname="5c4a6b10d809" time="0.557">
+  <properties/>
+  <testcase name="createOrder with multiple items should sum total()" classname="com.example.service.OrderServiceTest" time="0.301"/>
+  <testcase name="cancelOrder should update status and create audit log()" classname="com.example.service.OrderServiceTest" time="0.023"/>
+  <testcase name="createOrder should calculate total and decrease stock()" classname="com.example.service.OrderServiceTest" time="0.041"/>
+  <testcase name="cancelOrder should skip if already cancelled()" classname="com.example.service.OrderServiceTest" time="0.008"/>
+  <testcase name="getUserOrders should return orders by userId()" classname="com.example.service.OrderServiceTest" time="0.164"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

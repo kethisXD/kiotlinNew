@@ -1,0 +1,55 @@
+name: Backend CI/CD
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: gradle
+        
+    - name: Build with Gradle
+      run: gradle build --no-daemon
+      
+    - name: Run Tests
+      run: gradle test --no-daemon
+
+  deploy:
+    needs: build_and_test
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy to Server
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: 95.165.175.66
+        username: xxx
+        password: ${{ secrets.SERVER_PASSWORD }}
+        script: |
+          mkdir -p ~/projects/kiotlinNew
+          cd ~/projects/kiotlinNew
+          
+          if [ ! -d ".git" ]; then
+            git init
+            git remote add origin https://github.com/${{ github.repository }}.git
+            git fetch --all
+            git checkout -t origin/main -f
+          else
+            git fetch --all
+            git reset --hard origin/main
+          fi
+          
+          docker compose down
+          docker compose up -d --build
