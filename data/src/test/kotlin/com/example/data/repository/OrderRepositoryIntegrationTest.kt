@@ -16,22 +16,10 @@ import kotlin.test.assertTrue
 class OrderRepositoryIntegrationTest {
 
     companion object {
-        @Container
-        val postgresContainer = PostgreSQLContainer<Nothing>("postgres:15-alpine").apply {
-            withDatabaseName("testdb")
-            withUsername("test")
-            withPassword("test")
-        }
-
         @JvmStatic
         @BeforeAll
         fun setUpAll() {
-            postgresContainer.start()
-            DatabaseFactory.init(
-                postgresContainer.jdbcUrl,
-                postgresContainer.username,
-                postgresContainer.password
-            )
+            TestDatabaseSetup.init()
         }
     }
 
