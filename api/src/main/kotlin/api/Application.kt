@@ -23,9 +23,12 @@ fun main(args: Array<String>): Unit = EngineMain.main(args)
 
 fun Application.module() {
     // Database Init
-    val dbUrl = System.getenv("DB_URL") ?: "jdbc:postgresql://localhost:5432/ktor_db"
-    val dbUser = System.getenv("DB_USER") ?: "postgres"
-    val dbPass = System.getenv("DB_PASSWORD") ?: "postgres"
+    fun getConfig(key: String, default: String) =
+        System.getProperty(key) ?: System.getenv(key) ?: default
+
+    val dbUrl = getConfig("DB_URL", "jdbc:postgresql://localhost:5432/ktor_db")
+    val dbUser = getConfig("DB_USER", "postgres")
+    val dbPass = getConfig("DB_PASSWORD", "postgres")
     DatabaseFactory.init(dbUrl, dbUser, dbPass)
 
     install(Koin) {

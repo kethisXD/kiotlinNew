@@ -10,6 +10,9 @@ jobs:
   build_and_test:
     runs-on: ubuntu-latest
     
+    env:
+      TESTCONTAINERS_RYUK_DISABLED: "true"
+    
     steps:
     - uses: actions/checkout@v4
     
@@ -24,11 +27,8 @@ jobs:
       with:
         gradle-version: '8.7'
         
-    - name: Build with Gradle
+    - name: Build and Test
       run: gradle build --no-daemon
-      
-    - name: Run Tests
-      run: gradle test --no-daemon
 
   deploy:
     needs: build_and_test

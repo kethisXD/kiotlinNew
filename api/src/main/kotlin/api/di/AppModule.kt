@@ -15,6 +15,9 @@ import com.rabbitmq.client.ConnectionFactory
 import io.lettuce.core.RedisClient
 import org.koin.dsl.module
 
+private fun cfg(key: String, default: String) =
+    System.getProperty(key) ?: System.getenv(key) ?: default
+
 val appModule = module {
     // Database & Transactions
     single<TransactionManager> { TransactionManagerImpl() }
@@ -27,8 +30,8 @@ val appModule = module {
     
     // Infrastructure
     single { 
-        val host = System.getenv("REDIS_HOST") ?: "localhost"
-        val port = System.getenv("REDIS_PORT")?.toIntOrNull() ?: 6379
+        val host = cfg("REDIS_HOST", "localhost")
+        val port = cfg("REDIS_PORT", "6379").toIntOrNull() ?: 6379
         RedisClient.create("redis://$host:$port")
     }
     single { get<RedisClient>().connect() }
@@ -36,8 +39,8 @@ val appModule = module {
     
     single {
         val factory = ConnectionFactory()
-        factory.host = System.getenv("RABBITMQ_HOST") ?: "localhost"
-        factory.port = System.getenv("RABBITMQ_PORT")?.toIntOrNull() ?: 5672
+        factory.host = cfg("RABBITMQ_HOST", "localhost")
+        factory.port = cfg("RABBITMQ_PORT", "5672").toIntOrNull() ?: 5672
         factory.newConnection()
     }
     single { get<com.rabbitmq.client.Connection>().createChannel() }
